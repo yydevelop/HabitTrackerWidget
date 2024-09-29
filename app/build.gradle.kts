@@ -67,3 +67,33 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+plugins {
+    id("com.android.application")
+    kotlin("android")
+    kotlin("kapt") // KAPTプラグインを追加
+}
+android {
+    compileSdk = 31
+
+    defaultConfig {
+        applicationId = "com.example.habitrackerwidget"
+        minSdk = 24
+        targetSdk = 31
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+    }
+}
+dependencies {
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.room:room-runtime:2.4.3")
+    kapt("androidx.room:room-compiler:2.4.3") // KAPTを使用するため
+}
