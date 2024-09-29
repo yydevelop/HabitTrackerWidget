@@ -1,99 +1,84 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.application) // これが必要な場合は残します
+    alias(libs.plugins.kotlin.android) // これが必要な場合は残します
+    alias(libs.plugins.kotlin.kapt)
 }
+//plugins {
+//    id("com.android.application")
+//    kotlin("android")
+//    kotlin("kapt")
+//
+////    alias(libs.plugins.android.application) // これが必要な場合は残します
+////    alias(libs.plugins.kotlin.android) // これが必要な場合は残します
+//
+//}
 
 android {
-    namespace = "com.example.habittrackerwidget"
-    compileSdk = 34
-
-    defaultConfig {
-        applicationId = "com.example.habittrackerwidget"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-}
-
-dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-}
-plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt") // KAPTプラグインを追加
-}
-android {
-    compileSdk = 31
+    namespace = "com.example.habitrackerwidget"
+    compileSdk = 35
+    buildToolsVersion = "35.0.0"
 
     defaultConfig {
         applicationId = "com.example.habitrackerwidget"
         minSdk = 24
-        targetSdk = 31
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
     }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    sourceSets {
+        getByName("main").manifest.srcFile("src/main/AndroidManifest.xml")
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        // JVM Toolchainを使用してJavaバージョンを指定
+        java {
+            toolchain {
+                languageVersion.set(JavaLanguageVersion.of(17))
+            }
         }
     }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
+kapt {
+    javacOptions {
+        option("-source", "17")
+        option("-target", "17")
+    }
+}
+//dependencyResolutionManagement {
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//}
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("androidx.room:room-runtime:2.4.3")
-    kapt("androidx.room:room-compiler:2.4.3") // KAPTを使用するため
+//    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+
+    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.compose.ui:ui:1.5.0")
+    implementation("androidx.compose.material3:material3:1.1.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.compose.foundation:foundation-layout:1.5.0")
+    implementation("androidx.compose.foundation:foundation:1.5.0")
+
+    // Roomライブラリの依存関係
+//    implementation("androidx.room:room-runtime:2.6.0-alpha01")
+//    kapt("androidx.room:room-compiler:2.6.0-alpha01")
+//    implementation("androidx.room:room-ktx:2.6.0-alpha01")
+    implementation("androidx.room:room-runtime:2.5.0")
+    kapt("androidx.room:room-compiler:2.5.0")
+    implementation("androidx.room:room-ktx:2.5.0")
+
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.0")
 }

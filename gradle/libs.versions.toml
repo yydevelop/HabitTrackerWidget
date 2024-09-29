@@ -28,4 +28,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
+#kotlin-android = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+#kotlin.kapt = "org.jetbrains.kotlin.kapt"
+#android.application = "com.android.application"
+#kotlin.android = "org.jetbrains.kotlin.android"
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

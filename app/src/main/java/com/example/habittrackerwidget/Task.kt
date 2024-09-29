@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "task_table")
 data class Task(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val taskName: String,
-    val taskTime: Long, // Unix Timestamp
-    var isChecked: Boolean = false
+    val taskTime: Long,
+    val isChecked: Boolean
 )
